@@ -134,10 +134,10 @@ export default function AiBlock({data, api, block}) {
                     marginTop: '10px', // Optional margin between textarea and IconButton
                 }}
             >
-            <Tooltip title="Show Information">
+            <Tooltip title="情報を表示">
                 <IconButton
                     type="button"
-                    aria-label="show prompt"
+                    aria-label="プロンプトを表示"
                     sx={{
                         border: 'none',
                         outline: 'none',
@@ -147,12 +147,12 @@ export default function AiBlock({data, api, block}) {
                     <InfoIcon />
                 </IconButton>
             </Tooltip>
-            <Tooltip title="Show Space">
-                <IconButton 
-                onClick={onClickshowSpaceHandler} 
+            <Tooltip title="スペースを表示">
+                <IconButton
+                onClick={onClickshowSpaceHandler}
                 disabled={isLoading}
                 type="button"
-                        aria-label="show Space"
+                        aria-label="スペースを表示"
                         sx={{
                             border: 'none',
                             outline: 'none',
@@ -172,10 +172,10 @@ export default function AiBlock({data, api, block}) {
                     }}
                 >
                     <Typography sx={{ p: 2, maxWidth: '350px' }}>
-                        <p>Prompt: {query}</p>
-                        {context && <p>Context: {context}</p>}
+                        <p>プロンプト: {query}</p>
+                        {context && <p>コンテキスト: {context}</p>}
                         {/* <p>ResId: {dataId}</p> */}
-                        <p>Space Id: {blockId}</p>
+                        <p>スペースID: {blockId}</p>
                         {/* <p>Dimensions \n {DatabaseManager.getDataDimensions(currBlockId,currDataId)}</p> */}
 
                 

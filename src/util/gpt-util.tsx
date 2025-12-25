@@ -29,7 +29,7 @@ export async function generateDimensions(query, context){
   }
   
   const message = background !== "" ?
-    "This is the context:\n" + background + "\n---end context ---\n\n" + query
+    "これはコンテキストです:\n" + background + "\n---コンテキスト終了---\n\n" + query
     : query;
   let categoricalDims = await generateCategoricalDimensions(message, DatabaseManager.getDimensionSize(), 6);
   if (categoricalDims === null) {
@@ -96,11 +96,10 @@ export async function generateDimensions(query, context){
 }
 
 export async function generateCategoricalDimensions(prompt, catNum, valNum, temperature=TEMPERATURE){
-    const message = nominalDimensionDef + `list ${catNum} nominal dimensions and associated ${valNum} possible values
-     on which we can categorize and assess the content for the prompt: ${prompt}
+    const message = nominalDimensionDef + `次のプロンプトに対して、内容を分類・評価できる${catNum}個の名目次元と、それぞれに関連する${valNum}個の可能な値をリストアップしてください: ${prompt}
     ####
-    You MUST answer in the following JSON object format, wrapped in curly braces. There must be ${catNum} items in the JSON object:
-    {"<dimension name #1>": [<${valNum} values for this dimension>],..., "<dimension name #${catNum}>" : [<${valNum} values for this dimension>]}
+    以下のJSON形式で必ず回答してください。JSONオブジェクトには${catNum}個の項目が必要です。次元名と値は日本語で記述してください:
+    {"<次元名 #1>": [<この次元の${valNum}個の値>],..., "<次元名 #${catNum}>" : [<この次元の${valNum}個の値>]}
     `
 
     try {
@@ -139,12 +138,11 @@ export async function generateCategoricalDimensions(prompt, catNum, valNum, temp
 }
 
 export async function generateOrdinalDimensions(prompt, catNum){
-  const message = `list ${catNum} ordinal dimensions
-   on which we can assess the outcome for the prompt: ${prompt} to what extent represents the dimensions
+  const message = ordinalDimensionDef + `次のプロンプトに対する結果が各次元をどの程度表しているかを評価できる${catNum}個の順序次元をリストアップしてください: ${prompt}
   ####
-  answer in the following JSON format: 
+  以下のJSON形式で回答してください。次元名と値は日本語で記述してください:
   {
-      "<dimension name>": ["<lowest degree>", "least", "moderate", "most", "<highest degree>"]
+      "<次元名>": ["<最低度>", "低い", "中程度", "高い", "<最高度>"]
   }`
   try {
     const response = await fetch('https://api.openai.com/v1/completions', {

@@ -1,64 +1,64 @@
-# Luminate: Structured Generation and Exploration of Design Space with Large Language Models for Human-AI Co-Creation
+# Luminate: 大規模言語モデルを用いた人間とAIの共創のための構造化されたデザインスペースの生成と探索
 
 <p align="left">
 <a href="https://luminate-research.netlify.app/" target="_blank"><img src="./public/luminate-interface.png" width="100%" style="vertical-align: middle;" alt="G"></img></a>
 </p>
 
 
-### Try <a href="https://luminate-research.netlify.app/" target="_blank">Demo</a>
+### <a href="https://luminate-research.netlify.app/" target="_blank">デモ</a>を試す
 
-For a quick overview, watch this <a href="https://youtu.be/_H8yt2OS7FE?si=UJ7hpb2B7yX4VfVJ" target="_blank">30-sec preview video</a>. 
+概要を知るには、この<a href="https://youtu.be/_H8yt2OS7FE?si=UJ7hpb2B7yX4VfVJ" target="_blank">30秒のプレビュー動画</a>をご覧ください。
 
-### Motivation
+### 動機
 
-Thanks to their generative capabilities, generative models are now an invaluable tool for creative tasks. They can instantly generate tens to hundreds of visual & textual outputs, offering an abundant source of inspiration. But are we using them to their full potential? Current interaction paradigms — such as prompt engineering (`enter prompt -> get response -> refine prompt ->  get response -> ... repeat until satisfied`) — guide people to rapidly converge on a set of initial — potentially suboptimal — ideas and refine them instead of using their generative capabilities to bolster our creativity. 
+生成能力のおかげで、生成モデルは現在、創造的なタスクにとって非常に貴重なツールとなっています。視覚的・テキスト的な出力を瞬時に数十から数百生成し、豊富なインスピレーションの源を提供できます。しかし、私たちはそれらを最大限に活用しているでしょうか？現在の対話パラダイム―プロンプトエンジニアリング（`プロンプト入力 -> 応答取得 -> プロンプト改良 -> 応答取得 -> ... 満足するまで繰り返し`）など―は、人々を初期の―潜在的に最適でない―アイデアのセットに急速に収束させ、それらを洗練させることに導きますが、生成能力を使って私たちの創造性を高めることには導きません。
 
-We argue that generative AI models should assist in the generation of the design space — a space of possible ideas — rather than individual artifacts at the early stage of the creative process to empower users and harness the creative potential of AI.
+私たちは、生成AIモデルは創造プロセスの初期段階において、個別の成果物ではなくデザインスペース―可能なアイデアの空間―の生成を支援すべきだと主張します。これにより、ユーザーに力を与え、AIの創造的可能性を活用できます。
 
-When users prompt, we can generate key dimensions relevant to a task or topic in the prompt (e.g., genre, plot, tone, etc. for writing a story) and then relevant values for these dimensions (e.g., sci-fi, romance, comedy, etc. for genre). Using these LLM-generated dimensions and values, we can generate a number of responses with different dimensional values. This enables the systematic generation of diverse responses/ideas, covering a wide range of possible responses (e.g., sci-fi, romance, comedy). 
+ユーザーがプロンプトを入力すると、プロンプト内のタスクやトピックに関連する主要な次元（例：物語を書く場合、ジャンル、プロット、トーンなど）と、これらの次元に関連する値（例：ジャンルの場合、SF、ロマンス、コメディなど）を生成できます。これらのLLMで生成された次元と値を使用して、異なる次元値を持つ多数の応答を生成できます。これにより、幅広い可能な応答（例：SF、ロマンス、コメディ）をカバーする、多様な応答/アイデアの体系的な生成が可能になります。
 
-To test the feasibility and scalability of this approach, we developed Luminate, an interactive system with novel features to support this proposed interaction paradigm.
+このアプローチの実現可能性と拡張性をテストするために、私たちは提案する対話パラダイムをサポートする新機能を備えたインタラクティブシステムであるLuminateを開発しました。
 
-(from https://x.com/sangho_suh/status/1718384100330156398)
+（出典：https://x.com/sangho_suh/status/1718384100330156398）
 
 ---
 
-For more details, look at our <a href="https://youtu.be/CwVodmRuLds?si=qKHIbdtxWtICXCG8" target="_blank">6-min video</a>, <a href="https://x.com/sangho_suh/status/1718384100330156398" target="_blank">tweet</a>, <a href="https://arxiv.org/abs/2310.12953" target="_blank">paper</a>, or <a href="https://luminate-research.github.io/" target="_blank">project page</a>.
+詳細については、<a href="https://youtu.be/CwVodmRuLds?si=qKHIbdtxWtICXCG8" target="_blank">6分間の動画</a>、<a href="https://x.com/sangho_suh/status/1718384100330156398" target="_blank">ツイート</a>、<a href="https://arxiv.org/abs/2310.12953" target="_blank">論文</a>、または<a href="https://luminate-research.github.io/" target="_blank">プロジェクトページ</a>をご覧ください。
 
-## Installation
+## インストール
 
-If running for the first time, install dependencies (required: node.js v14.17.0):
+初回実行時は、依存関係をインストールしてください（必要：node.js v14.17.0）：
 
 `npm install`
 
-To run server, write:
+サーバーを実行するには：
 
 ```
 npm run dev
 ```
 
-To use OpenAI API, 
+OpenAI APIを使用するには：
 
-1. create `.env` file at the root of the directory.
-2. Add the following in `.env`:
+1. ディレクトリのルートに`.env`ファイルを作成します。
+2. `.env`に以下を追加します：
 
    ```
    VITE_OPENAI_API_KEY = "{YOUR_OPENAI_API_KEY}"
    ```
-3. Replace `{YOUR_OPENAI_API_KEY}` with your openAI API key
+3. `{YOUR_OPENAI_API_KEY}`をあなたのOpenAI APIキーに置き換えます
 
 
-## CHI 2024 Paper
+## CHI 2024 論文
 
-**Luminate: Structured Generation and Exploration of Design Space with Large Language Models for Human-AI Co-Creation**<br />
+**Luminate: 大規模言語モデルを用いた人間とAIの共創のための構造化されたデザインスペースの生成と探索**<br />
 Sangho Suh\*, Meng Chen\*, Bryan Min, Toby Jia-Jun Li, Haijun Xia
 
-**Please cite this paper if you used the code or prompts in this repository.**
+**このリポジトリのコードやプロンプトを使用した場合は、この論文を引用してください。**
 
-> Sangho Suh, Meng Chen, Bryan Min, Toby Jia-Jun Li, and Haijun Xia. 2024. Luminate: Structured Generation and Exploration of Design Space with Large Language Models for Human-AI Co-Creation. In Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI ’24), May 11–16, 2024, Honolulu, HI, USA. ACM, New York, NY, USA, 26 pages. https://dl.acm.org/doi/10.1145/3613904.3642400
+> Sangho Suh, Meng Chen, Bryan Min, Toby Jia-Jun Li, and Haijun Xia. 2024. Luminate: Structured Generation and Exploration of Design Space with Large Language Models for Human-AI Co-Creation. In Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI '24), May 11–16, 2024, Honolulu, HI, USA. ACM, New York, NY, USA, 26 pages. https://dl.acm.org/doi/10.1145/3613904.3642400
 
-## Bibtex
-    
+## Bibtex（引用形式）
+
  ```bibtex
  @article{suh2024luminate,
    title = {Luminate: Structured Generation and Exploration of Design Space with Large Language Models for Human-AI Co-Creation},

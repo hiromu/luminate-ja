@@ -28,7 +28,7 @@ export function ApiInputModal() {
 
   return (
     <div>
-      <Tooltip title="Settings">
+      <Tooltip title="設定">
         <button className="api-input-button" onClick={handleOpen}>
               <Settings style={{color: '#aaa'}} />
         </button>
@@ -54,14 +54,14 @@ export function ApiInputModal() {
             borderRadius: 3
           }}
         >
-          <h4>Settings</h4>
+          <h4>設定</h4>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               variant="outlined"
               margin="normal"
               fullWidth
               id="openai-api"
-              label="Enter your OpenAPI Key"
+              label="OpenAI APIキーを入力"
               name="openai-api"
               defaultValue={getEnvVal('VITE_OPENAI_API_KEY')}
               autoFocus
@@ -71,7 +71,7 @@ export function ApiInputModal() {
               margin="normal"
               fullWidth
               id="batch-size"
-              label="Generation Batch Size"
+              label="生成バッチサイズ"
               defaultValue={DatabaseManager.getBatchSize()}
               name="batch-size"
             />
@@ -80,17 +80,17 @@ export function ApiInputModal() {
               margin="normal"
               fullWidth
               id="num-dims"
-              label="Number of Dimensions"
+              label="次元の数"
               defaultValue={DatabaseManager.getDimensionSize()}
               name="num-dims"
             />
             <p className='note'>
-              Luminate will not save your OpenAI API key neither in a cookie, localStorage, nor server. 
-              You will need to enter it every time you open the app.
-              You may also download the source code and run it locally.
+              LuminateはOpenAI APIキーをクッキー、localStorage、サーバーのいずれにも保存しません。
+              アプリを開くたびに入力する必要があります。
+              ソースコードをダウンロードしてローカルで実行することもできます。
             </p>
             <button type="submit" className='submit-button'>
-              Save
+              保存
             </button>
           </Box>
         </Box>

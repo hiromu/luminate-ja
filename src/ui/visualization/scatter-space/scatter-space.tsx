@@ -132,11 +132,11 @@ export const ScatterSpace = ({camera, setCamera}) => {
             !loadingGrow ?
             <>
               <SwitchAccessShortcutAdd style={{color: '#777'}} />
-              Add More
+              さらに追加
             </> :
             <>
               <CircularProgress style={{color: '#777'}} size={20} />
-              Generating More Responses...
+              応答を生成中...
             </>
           }
         </button>

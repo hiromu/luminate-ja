@@ -51,7 +51,7 @@ export default class GptApiBlockTune {
     render() {
         return {
             icon: `<i class="material-icons">smart_toy</i>`,
-            label: 'AI Brainstorming',
+            label: 'AIブレインストーミング',
             onActivate: () => {
                 try{
                     console.log("onActivate");

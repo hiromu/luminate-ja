@@ -74,7 +74,7 @@ export const AxisY = ({dimension, axes, camera, nodes}: {dimension: Dimension, a
               loadingGrow ? 
               <>
                 <CircularProgress style={{color: '#777'}} size={20} />
-                <div>Adding {addLabelInput}...</div>
+                <div>{addLabelInput}を追加中...</div>
               </>:
               <form onSubmit={(e) => {
                 e.preventDefault()
@@ -94,7 +94,7 @@ export const AxisY = ({dimension, axes, camera, nodes}: {dimension: Dimension, a
                   })
                 }
               }}>
-                <input type='text' placeholder='Add new label' value={addLabelInput} onChange={(e: any) => {
+                <input type='text' placeholder='新しいラベルを追加' value={addLabelInput} onChange={(e: any) => {
                   setAddLabelInput(e.target.value)
                 }}></input>
                 <button>+</button>

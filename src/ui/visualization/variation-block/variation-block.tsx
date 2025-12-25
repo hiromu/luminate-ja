@@ -190,13 +190,13 @@ export const VariationBlock = ({ block, zoom, color, scaleIn }) => {
         <h6>{block.Title}</h6>
       </div>
       <div className="content-section">
-        <p className="summary-title">Summary:</p>
+        <p className="summary-title">要約:</p>
           <p>{block.Summary}</p>
-        <p className="summary-title">Structure:</p>
+        <p className="summary-title">構造:</p>
           <p>{block.Structure}</p>
       </div>
       {/* Attributes */}
-      <p className="summary-title">Attributes:</p>
+      <p className="summary-title">属性:</p>
       <div className="labels">
         {Object.entries(block.Dimension.categorical).map(([key, value]) => <DimensionLabel {...{keyword: `${key} : ${value}`}} />)}
       </div>
@@ -211,7 +211,7 @@ export const VariationBlock = ({ block, zoom, color, scaleIn }) => {
         </div>
         <p style={{ whiteSpace: 'pre-wrap'}}>{block.Result}</p>
         {/* Attributes */}
-        <p className="summary-title">Attributes:</p>
+        <p className="summary-title">属性:</p>
         <div className="labels">
           {Object.entries(block.Dimension.categorical).map(([key, value]) => <DimensionLabel {...{keyword: `${key} : ${value}`}} />)}
         </div>
@@ -234,11 +234,11 @@ const DetailsFooter = ({block, loadingMore, setLoadingMore, onBookmarkHandler, o
         !loadingMore ?
         <div className="icon-button">
           <AutoAwesome style={{color: '#777', width: '20px', height: '20px'}} />
-          More Like This
+          類似のものをもっと見る
         </div> :
         <div>
           <CircularProgress style={{color: '#777'}} size={20} />
-          Generating Similar Responses...
+          類似の応答を生成中...
         </div>
       }
     </button>

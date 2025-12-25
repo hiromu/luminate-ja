@@ -14,7 +14,7 @@ export function ContactModal() {
 
   return (
     <div>
-      <Tooltip title="Contact Us">
+      <Tooltip title="お問い合わせ">
         <button className="contact-button" onClick={handleOpen}>
               <SupportAgent style={{color: '#aaa'}} />
         </button>
@@ -40,10 +40,10 @@ export function ContactModal() {
             borderRadius: 3
           }}
         >
-          <h4>Contact Us</h4>
+          <h4>お問い合わせ</h4>
           <p className='note'>
-            If you have any questions, comments, or concerns, please reach out to us at  
-            <a href="mailto:luminate.system@gmail.com"> luminate.system@gmail.com</a>
+            ご質問、ご意見、ご要望がございましたら、
+            <a href="mailto:luminate.system@gmail.com"> luminate.system@gmail.com</a> までお気軽にお問い合わせください。
           </p>
         </Box>
       </Modal>

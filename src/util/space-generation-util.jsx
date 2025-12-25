@@ -60,9 +60,9 @@ export async function buildSpace(currBlockId, dimensions, numResponses, prompt, 
         return Promise.all(reqs.map(async (req) => {
             try {
                 const id = req["ID"];
-                const wordLimit = "Limit the response to 150 words.\n####\n";
+                const wordLimit = "応答は150語以内に制限してください。必ず日本語で応答してください。\n####\n";
                 const requirements = req["Requirements"];
-                const message = `${wordLimit}${editorBackgroundPrompt()} Prompt: ${prompt}\n####\nRequirements: ${requirements}`;
+                const message = `${wordLimit}${editorBackgroundPrompt()} プロンプト: ${prompt}\n####\n要件: ${requirements}`;
                 const response = await generateResponse(message);
                 const trimmedResponse = response.trim();
                 const summary = await abstraction(trimmedResponse);
@@ -126,9 +126,9 @@ export async function growSpace(currBlockId, dimensionMap, labels, numResponses,
     const responsePromises = dimReqs.map(async (req) => {
         // parse req to get id and requirements
         const id = req["ID"];
-        const wordLimit = "Limit the response to 150 words.\n\n"
+        const wordLimit = "応答は150語以内に制限してください。必ず日本語で応答してください。\n\n"
         const requirements = req["Requirements"];
-        const message = wordLimit + editorBackgroundPrompt() + "Prompt: " + prompt + "\n" + DELIMITER + "\n" + "Requirements: " + requirements + "\n" + DELIMITER + "\n";
+        const message = wordLimit + editorBackgroundPrompt() + "プロンプト: " + prompt + "\n" + DELIMITER + "\n" + "要件: " + requirements + "\n" + DELIMITER + "\n";
         // Call the generateResponse function to generate a response for each requirement
         const response = await generateResponse(message);
         // store the response in the data
@@ -165,9 +165,9 @@ export async function addLabelToSpace(dimensionMap, newLabel, numResponses, prom
         const responsePromises = dimReqs.map(async (req) => {
             // parse req to get id and requirements
             const id = req["ID"];
-            const wordLimit = "Limit the response to 150 words.\n####\n"
+            const wordLimit = "応答は150語以内に制限してください。必ず日本語で応答してください。\n####\n"
             const requirements = req["Requirements"];
-            const message = wordLimit + editorBackgroundPrompt() + "Prompt: " + prompt + "\n" + DELIMITER + "\n" + "Requirements: " + requirements + "\n" + DELIMITER + "\n";
+            const message = wordLimit + editorBackgroundPrompt() + "プロンプト: " + prompt + "\n" + DELIMITER + "\n" + "要件: " + requirements + "\n" + DELIMITER + "\n";
             // Call the generateResponse function to generate a response for each requirement
             const response = await generateResponse(message);
             // store the response in the data
@@ -207,8 +207,8 @@ export async function addSimilarNodesToSpace(node, nodeMap, setNodeMap){
     const responsePromises = [0,1,2,3,4].map(async (i) => {
         // parse req to get id and requirements
         const id = uuid();
-        const wordLimit = "Limit the response to 150 words.\n\n"
-        const message = wordLimit + editorBackgroundPrompt() + "Prompt: " + node.Prompt;
+        const wordLimit = "応答は150語以内に制限してください。必ず日本語で応答してください。\n\n"
+        const message = wordLimit + editorBackgroundPrompt() + "プロンプト: " + node.Prompt;
         // Call the generateResponse function to generate a response for each requirement
         const response = await generateResponse(message);
         // store the response in the data
@@ -398,28 +398,28 @@ export async function abstraction(text){
   // did not get a valid response after 5 tries
   // make toasts to notify the user
     var toast = new bootstrap.Toast(document.getElementById('error-toast'));
-    document.getElementById('error-toast-text').textContent = "Error: Failed to generate the summary. Please try again.";
+    document.getElementById('error-toast-text').textContent = "エラー: 要約の生成に失敗しました。もう一度お試しください。";
     toast.show();
     return {"Key Words": [], "Summary": "", "Structure": "", "Title": ""};
   
 }
 
 async function summarizeText(text){
-    const message = `Given following text, return key words and a one sentence summary, a structure , and a title of the text.
+    const message = `以下のテキストから、キーワード、一文の要約、構造、タイトルを抽出してください。必ず日本語で応答してください。
       ####
-      Text is: ${text}
+      テキスト: ${text}
       ####
-      Don't include any text other than the json
-      Word limit of the summary text is 20 words
-      Word limit of the title is 5 words
-      Maximum 5 key words
+      JSON以外のテキストは含めないでください
+      要約は20語以内
+      タイトルは5語以内
+      キーワードは最大5個
       ####
-      Should be in the following JSON format: 
+      以下のJSON形式で回答してください（すべて日本語で記述）:
       {
-          "Key Words": ["<key word 1>", "<key word 2>", ...], 
-          "Summary": "<summary>",
-          "Structure": "<part 1>-<part 2>-<part 3>...",
-          "Title": "<title>"
+          "Key Words": ["<キーワード 1>", "<キーワード 2>", ...],
+          "Summary": "<要約>",
+          "Structure": "<パート 1>-<パート 2>-<パート 3>...",
+          "Title": "<タイトル>"
       }`;
     const response = await fetch('https://api.openai.com/v1/completions', {
       method: 'POST',
@@ -583,14 +583,14 @@ export async function addNewDimension(prompt, dimensionName, dimensionMap, setDi
     const data = {};
     const responsePromises = Object.entries(nodeMap).map(async ([id, node], i) => {
         try{
-            const wordLimit = "Limit the response to 150 words."
+            const wordLimit = "応答は150語以内に制限してください。必ず日本語で応答してください。"
             const formatReq = `
             ####
             answer in the following JSON format: 
             {
                 "label": "<label>"
             }`
-            const assignLabelMessage = "Prompt: " + assignLabelPrompt + "####" + "Current response: " + node["Result"]+ "####" + formatReq;
+            const assignLabelMessage = "プロンプト: " + assignLabelPrompt + "####" + "現在の応答: " + node["Result"]+ "####" + formatReq;
             var labelResponse = await generateResponse(assignLabelMessage);
             var label = "";
             for (let i = 0; i < 5; i++){
@@ -603,7 +603,7 @@ export async function addNewDimension(prompt, dimensionName, dimensionMap, setDi
             }
             // parse the response to get the dimension label
             const reviseResponsePrompt = `Revise this response such that it shows ${label} in the sense of ${dimensionName}.`;
-            const reviseResponseMessage = wordLimit + "####" + "Prompt: " + reviseResponsePrompt + "####" + "Current response: " + node["Result"];
+            const reviseResponseMessage = wordLimit + "####" + "プロンプト: " + reviseResponsePrompt + "####" + "現在の応答: " + node["Result"];
             var result = await generateResponse(reviseResponseMessage);
             result = result.trim();
             const summary = await abstraction(result);

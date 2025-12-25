@@ -37,12 +37,12 @@ export default function DimensionMenu({position, label}) {
 
   return (
     <Dropdown>
-      <TriggerButton id="x-trigger">{label.name ? label.name: 'Select a Dimension'}</TriggerButton>
+      <TriggerButton id="x-trigger">{label.name ? label.name: '次元を選択'}</TriggerButton>
       <Menu slots={{ listbox: StyledListbox }}
       style={{ zIndex: 9999 }}
       >
         <StyledMenuItem key='null' onClick={createHandleMenuClick(null)}>
-            No Dimension on this axis
+            この軸には次元なし
         </StyledMenuItem>
         {Object.values(dimensionMap).map((dimension: any) => {
             return (

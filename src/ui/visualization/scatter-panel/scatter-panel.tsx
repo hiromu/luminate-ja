@@ -80,7 +80,7 @@ export const ScatterPanel = ({updateNodePositions, camera, setCamera}) => {
       var toast = new bootstrap.Toast(document.getElementById('error-toast'));
       const err = document.getElementById('error-toast-text');
       if (err) {
-        err.textContent = "No results found.";
+        err.textContent = "結果が見つかりませんでした。";
         toast.show();
       }
       return
@@ -162,10 +162,10 @@ export const ScatterPanel = ({updateNodePositions, camera, setCamera}) => {
         onSubmit={submitListener}>
         <KeywordSearch>
           <StyledInputBase
-            placeholder="Search for nodes using keywords"
-            inputProps={{ 'aria-label': 'search' }}
-            onChange={handleInputChange} 
-            value={query} 
+            placeholder="キーワードでノードを検索"
+            inputProps={{ 'aria-label': '検索' }}
+            onChange={handleInputChange}
+            value={query}
           />
           <SearchIconWrapper>
             <Search style={{color: '#aaa'}} />
@@ -262,7 +262,7 @@ export const ScatterPanel = ({updateNodePositions, camera, setCamera}) => {
             loadingGrow ? 
             <div className='loading-grow'>
               <CircularProgress style={{color: '#777'}} size={20} />
-              <div>Adding {addDimensionInput}...</div>
+              <div>{addDimensionInput}を追加中...</div>
             </div>:
             <form onSubmit={(e) => {
               e.preventDefault()
@@ -276,7 +276,7 @@ export const ScatterPanel = ({updateNodePositions, camera, setCamera}) => {
               })
               }
             }>
-              <input type='text' placeholder='Add new dimension' value={addDimensionInput} onChange={(e: any) => {
+              <input type='text' placeholder='新しい次元を追加' value={addDimensionInput} onChange={(e: any) => {
                 setAddDimensionInput(e.target.value)
               }}></input>
               <button>+</button>

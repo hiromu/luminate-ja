@@ -67,7 +67,7 @@ const initEditor = () => {
   
     },
     // tunes: ["gptApiBlockTune"],
-    placeholder: 'Click here to write down the title',
+    placeholder: 'ここをクリックしてタイトルを入力してください',
     // defaultBlock: 'AiTool',
     data: {
       blocks: [

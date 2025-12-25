@@ -40,9 +40,9 @@ export default function AiForm({responseHandler, selectedContent}) {
         const toastContent = `
         <div class="d-flex">
             <div class="toast-body" id="toast-text-${d}">
-                Generated a new categorical dimension: ${d}
+                新しいカテゴリー次元を生成しました: ${d}
             </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="閉じる"></button>
         </div>
         `;
 
@@ -65,14 +65,14 @@ export default function AiForm({responseHandler, selectedContent}) {
         if (res.status === 1) {
             console.log("[Error] failed to generate dimensions due to failed API call");
             let toast = new bootstrap.Toast(document.getElementById('error-toast'));
-            document.getElementById('error-toast-text').textContent = "Failed to generate dimensions due to failed API call. Please make sure your API key is correct and try again.";
+            document.getElementById('error-toast-text').textContent = "API呼び出しの失敗により次元の生成に失敗しました。APIキーが正しいことを確認して、もう一度お試しください。";
             toast.show();
             return {result: null, status: 1};
         }
         if (res.status === 2) {
             console.log("[Error] failed to generate dimensions due to constant error in parsing API response");
             let toast = new bootstrap.Toast(document.getElementById('error-toast'));
-            document.getElementById('error-toast-text').textContent = "Failed to generate dimensions due to constant error in parsing API response. Please try again.";
+            document.getElementById('error-toast-text').textContent = "APIレスポンスの解析エラーにより次元の生成に失敗しました。もう一度お試しください。";
             toast.show();
             return {result: null, status: 1};
         }
@@ -89,7 +89,7 @@ export default function AiForm({responseHandler, selectedContent}) {
                 addToast(d);
                 // show a toast to indicate that the dimensions are generated
                 let toast = new bootstrap.Toast(document.getElementById('fav-toast'+d));
-                document.getElementById(`toast-text-${d}`).textContent = "New dimension: " + d;
+                document.getElementById(`toast-text-${d}`).textContent = "新しい次元: " + d;
                 toast.show();
 
             });
@@ -104,7 +104,7 @@ export default function AiForm({responseHandler, selectedContent}) {
                 addToast(d);
                 // show a toast to indicate that the dimensions are generated
                 let toast = new bootstrap.Toast(document.getElementById('fav-toast'+d));
-                document.getElementById(`toast-text-${d}`).textContent = "New dimension: " + d;
+                document.getElementById(`toast-text-${d}`).textContent = "新しい次元: " + d;
                 toast.show();
             });
             setGenerationState("response");
@@ -112,7 +112,7 @@ export default function AiForm({responseHandler, selectedContent}) {
         catch (error) {
             console.log("[Error] error when creating the space", error);
             let toast = new bootstrap.Toast(document.getElementById('error-toast'));
-            document.getElementById('error-toast-text').textContent = "Failed to generate dimensions due to error in parsing JSON. Please try again.";
+            document.getElementById('error-toast-text').textContent = "JSON解析エラーにより次元の生成に失敗しました。もう一度お試しください。";
             toast.show();
             // remove all dimensions from the database
             DatabaseManager.deleteAllDimensions(currBlockId);
@@ -130,7 +130,7 @@ export default function AiForm({responseHandler, selectedContent}) {
         const onFinished = await SpaceUtil.buildSpace(currBlockId, dims, num, query, context);
         // make a toast to indicate that the space is generated
         var toast = new bootstrap.Toast(document.getElementById('fav-toast'));
-        document.getElementById('toast-text').textContent = "Generated a space with " + num + " responses";
+        document.getElementById('toast-text').textContent = num + " 個の応答でスペースを生成しました";
         toast.show();
 
         const endTime = Date.now();
@@ -149,7 +149,7 @@ export default function AiForm({responseHandler, selectedContent}) {
         useResponseStore.setState({responseId: null});
         if (query === '' || query === undefined || query === null) {
             let toast = new bootstrap.Toast(document.getElementById('error-toast'));
-            document.getElementById('error-toast-text').textContent = "Please enter a query";
+            document.getElementById('error-toast-text').textContent = "クエリを入力してください";
             toast.show();
             return;
         }
@@ -258,13 +258,13 @@ export default function AiForm({responseHandler, selectedContent}) {
                     {(() => {
                         switch (generationState) {
                             case 'dimension':
-                                return 'Determining important apsects ~10s';
+                                return '重要な側面を決定中 〜10秒';
                             case 'response':
-                                return 'Generating your first response ~10s';
+                                return '最初の応答を生成中 〜10秒';
                             case 'space':
-                                return 'Maybe you also want to see other responses... ~10s';
+                                return '他の応答も生成中... 〜10秒';
                             default:
-                                return 'AI Is Generating ~30s';
+                                return 'AIが生成中 〜30秒';
                         }
                     })()}
                     </span>
@@ -275,10 +275,10 @@ export default function AiForm({responseHandler, selectedContent}) {
         )
         : <InputBase
             sx={{ ml: 1, flex: 1 }}
-            placeholder="Ask AI for ideas"
+            placeholder="AIにアイデアを尋ねる"
             maxRows={6}
             multiline={true}
-            inputProps={{ 'aria-label': 'Ask AI for ideas' }}
+            inputProps={{ 'aria-label': 'AIにアイデアを尋ねる' }}
             id="chat-input"
             defaultValue = {firstRendered ? selectedContent : query}
             onChange={handleInputChange} // Handle input changes

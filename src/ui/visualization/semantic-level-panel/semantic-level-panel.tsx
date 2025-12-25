@@ -34,7 +34,7 @@ export  const  SemanticLevelPanel = ({ zoom, setZoomLevel}) => {
   const buttons = [
     {
       level: 'dot',
-      tooltip: 'Dot',
+      tooltip: 'ドット',
       placement: 'right',
       icon: <BlurOn />,
       minZoom: 0,
@@ -43,7 +43,7 @@ export  const  SemanticLevelPanel = ({ zoom, setZoomLevel}) => {
     },
     {
       level: 'title',
-      tooltip: 'Title',
+      tooltip: 'タイトル',
       placement: 'right',
       icon: <Title />,
       minZoom: 1.5,
@@ -52,7 +52,7 @@ export  const  SemanticLevelPanel = ({ zoom, setZoomLevel}) => {
     },
     {
       level: 'labels',
-      tooltip: 'Keywords',
+      tooltip: 'キーワード',
       placement: 'right',
       icon: <Abc />,
       minZoom: 3,
@@ -61,7 +61,7 @@ export  const  SemanticLevelPanel = ({ zoom, setZoomLevel}) => {
     },
     {
       level: 'sum',
-      tooltip: 'Summary',
+      tooltip: '要約',
       placement: 'right',
       icon: <FormatListBulleted />,
       minZoom: 7,
@@ -70,7 +70,7 @@ export  const  SemanticLevelPanel = ({ zoom, setZoomLevel}) => {
     },
     {
       level: 'full',
-      tooltip: 'Full text',
+      tooltip: '全文',
       placement: 'right',
       icon: <FormatAlignJustify />,
       minZoom: 12,
@@ -112,7 +112,7 @@ export  const  SemanticLevelPanel = ({ zoom, setZoomLevel}) => {
         }
         {matchingButton && (
           showAllButtons ? 
-              <Tooltip title='Layer' placement={matchingButton.placement}>
+              <Tooltip title='レイヤー' placement={matchingButton.placement}>
                 <IconButton
                 type="button"
                 aria-label="filter"

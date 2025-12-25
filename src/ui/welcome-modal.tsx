@@ -19,7 +19,7 @@ export function WelcomeModal( {updateApiKey}){
       let toast = new bootstrap.Toast(document.getElementById('fav-toast'));
       var msg = document.getElementById('toast-text');
       if (msg) {
-        msg.textContent =  "You need to set up the OpenAI API key to use Luminate. Please click on the settings icon in the top right corner to set it up.";
+        msg.textContent =  "Luminateを使用するにはOpenAI APIキーの設定が必要です。右上の設定アイコンをクリックして設定してください。";
         toast.show();
       }
     }
@@ -57,10 +57,10 @@ export function WelcomeModal( {updateApiKey}){
             borderRadius: 3
           }}
         >
-          <h4>Welcome to Luminate 👋</h4>
+          <h4>Luminateへようこそ 👋</h4>
           <p>
-            Luminate is a research prototype for human-AI text-based co-creation powered by GPT 3.5.
-            To start off, please enter your OpenAI API Key in the text field below.
+            LuminateはGPT 3.5を利用した人間とAIのテキストベース共同創作のための研究プロトタイプです。
+            まず、下のテキストフィールドにOpenAI APIキーを入力してください。
           </p>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
@@ -69,25 +69,25 @@ export function WelcomeModal( {updateApiKey}){
               required
               fullWidth
               id="openai-api"
-              label="Enter your OpenAPI Key"
+              label="OpenAI APIキーを入力"
               name="openai-api"
               autoFocus
             />
             <p className='note'>
-              You can find your Secret OpenAI API key in your <a href="https://platform.openai.com/account/api-keys" target="_blank">User Settings</a>
+              OpenAI APIキーは<a href="https://platform.openai.com/account/api-keys" target="_blank">ユーザー設定</a>から取得できます
             </p>
             <p className='note'>
-              Generate one response in the design space costs about $0.007. By default, Luminate will generate 20 responses at a time which costs about $0.14.
-              You can modify the batch size by opening Settings <img src="settings-menu.png" alt="Settings" style={{width: '30px', height: '30px'}}/> in the top right corner.
-              Detailed information about the cost can be found in  <a href="https://openai.com/pricing" target="_blank">Pricing</a>
+              デザインスペースで1つの応答を生成するコストは約$0.007です。デフォルトでは、Luminateは一度に20の応答を生成し、約$0.14のコストがかかります。
+              バッチサイズは右上の設定 <img src="settings-menu.png" alt="設定" style={{width: '30px', height: '30px'}}/> から変更できます。
+              コストの詳細については<a href="https://openai.com/pricing" target="_blank">価格ページ</a>をご覧ください
             </p>
             <p className='note'>
-              Luminate will not save your OpenAI API key neither in a cookie, localStorage, nor server. 
-              You will need to enter it every time you open the app.
-              You may also download the source code and run it locally.
+              LuminateはOpenAI APIキーをクッキー、localStorage、サーバーのいずれにも保存しません。
+              アプリを開くたびに入力する必要があります。
+              ソースコードをダウンロードしてローカルで実行することもできます。
             </p>
             <button type="submit" className='submit-button'>
-              Play Luminate <img src="/luminate-logo.svg" style={{maxHeight: '24px'}} alt="arrow-right" />
+              Luminateを開始 <img src="/luminate-logo.svg" style={{maxHeight: '24px'}} alt="arrow-right" />
             </button>
           </Box>
         </Box>

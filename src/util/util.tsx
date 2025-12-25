@@ -51,93 +51,93 @@ export const startTutorial = () => {
     tooltipClass: 'tutorialTooltip',
     steps: [
       {
-        title: 'Luminate Tutorial <img src="luminate-logo.png" style="width:30px; height:30px;"/>',
-        intro: 'This is a walkthrough to get you acquainted with each component of Luminate and help you understand the system.'
+        title: 'Luminateチュートリアル <img src="luminate-logo.png" style="width:30px; height:30px;"/>',
+        intro: 'これはLuminateの各コンポーネントに慣れ、システムを理解するためのウォークスルーです。'
       },
       {
-        title: 'Text Editor',
+        title: 'テキストエディタ',
         element: document.querySelector('#text-editor-container'),
-        intro: "This is the text editor where you can write your story."
+        intro: "これはあなたのストーリーを書くことができるテキストエディタです。"
       },
       {
-        title: 'Prompt AI',
+        title: 'AIにプロンプト',
         element: document.querySelector('#ai-form'),
-        intro: "You can also use this input box to ask AI for ideas.\
-        The AI takes a few seconds to figure out important attributes to this prompt and generates multiple responses. "
+        intro: "この入力ボックスを使用してAIにアイデアを尋ねることもできます。\
+        AIはこのプロンプトの重要な属性を見つけ出し、複数の応答を生成するのに数秒かかります。"
       },
       {
-        title: 'Exploration View',
+        title: '探索ビュー',
         element: document.querySelector('#my-spaceviz'),
-        intro: "This is the exploration view where you can see multiple responses once you prompt AI for ideas."
+        intro: "これはAIにアイデアを尋ねると、複数の応答を見ることができる探索ビューです。"
       },
       {
-        title: 'Collapse Text Editor',
+        title: 'テキストエディタを折りたたむ',
         element: document.querySelector('#collapse-button'),
-        intro: "You can collapse the text editor to get a better view of the exploration view."
+        intro: "テキストエディタを折りたたんで、探索ビューをより見やすくすることができます。"
       },
       {
-        title: 'Search Bar',
+        title: '検索バー',
         element: document.querySelector('#searchbar'),
-        intro: "You can use the search bar to quickly find responses that contain a specific word or phrase."
+        intro: "検索バーを使用して、特定の単語やフレーズを含む応答を素早く見つけることができます。"
       },
       {
-        title: 'Favorites',
+        title: 'お気に入り',
         element: document.querySelector('#fav-button'),
-        intro: "You can click the bookmark icon to see your favorite responses of current space."
+        intro: "ブックマークアイコンをクリックして、現在のスペースのお気に入りの応答を表示できます。"
       },
       {
-        title:'Filter',
+        title:'フィルター',
         element: document.querySelector('#filter-dims'),
-        intro: 'Once the design space is generated, you can see dimensions like the one shown here. You can filter the responses based on these dimensions and the associated values.\
+        intro: 'デザインスペースが生成されると、ここに示されているような次元が表示されます。これらの次元と関連する値に基づいて応答をフィルタリングできます。\
         <img src="filter-bar.png" style="width:100%; height:auto;"/>'
       },
       {
-        title:'Semantic Zoom',
+        title:'セマンティックズーム',
         element: document.querySelector('.semantic-level-panel'),
-        intro: 'You can use the semantic zoom to see responses at different levels of abstraction (dot,title, keywords, summary, and full text).\
+        intro: 'セマンティックズームを使用して、異なる抽象度レベル（ドット、タイトル、キーワード、要約、全文）で応答を表示できます。\
         <img src="semantic-zoom.png" style="width:100%; height:auto;"/>'
       },
       {
-        title:'Select Dimension',
+        title:'次元を選択',
         element: document.querySelector('#x-trigger'),
-        intro: "You can select a dimension to arrange the responses in the exploration view based on the values in that dimension."
+        intro: "次元を選択して、その次元の値に基づいて探索ビュー内の応答を配置できます。"
       },
       {
-        title:'Menu',
-        intro: ' At the top right corner, you can see 4 icon buttons.\
+        title:'メニュー',
+        intro: ' 右上に4つのアイコンボタンが表示されます。\
                 <ul style=\"list-style-type: none; padding-left: 0; margin-top: 10px;\">\
                   <li style=\"display: flex; align-items: center; gap: 10px; margin-bottom: 10px;\">\
-                      <img src=\"tutorial-menu.png\" alt=\"Tutorial\" style=\"width: 30px; height: 30px;\">\
-                      <strong>Tutorial:</strong> You can watch the tutorial of Luminate.\
+                      <img src=\"tutorial-menu.png\" alt=\"チュートリアル\" style=\"width: 30px; height: 30px;\">\
+                      <strong>チュートリアル:</strong> Luminateのチュートリアルを見ることができます。\
                   </li>\
                   <li style=\"display: flex; align-items: center; gap: 10px; margin-bottom: 10px;\">\
-                      <img src=\"contact-menu.png\" alt=\"Settings\" style=\"width: 30px; height: auto;\">\
-                      <strong>Contact:</strong> You can contact researchers via email.\
+                      <img src=\"contact-menu.png\" alt=\"設定\" style=\"width: 30px; height: auto;\">\
+                      <strong>お問い合わせ:</strong> 研究者にメールで連絡できます。\
                   </li>\
                   <li style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-bottom: 10px;">\
                       <div style="display: flex; width: 100%; gap: 10px;">\
-                          <img src="settings-menu.png" alt="Settings" style="width: 30px; height: 30px;">\
-                          <strong>Settings:</strong> You can enter your OpenAI API key and change the batch size and number of dimensions.\
-                          The default batch size is 20 and the number of dimensions is 3.\
+                          <img src="settings-menu.png" alt="設定" style="width: 30px; height: 30px;">\
+                          <strong>設定:</strong> OpenAI APIキーを入力し、バッチサイズと次元の数を変更できます。\
+                          デフォルトのバッチサイズは20、次元の数は3です。\
                       </div>\
-                      <img src="settings-input.png" alt="Semantic Zoom" style="width: auto; height: 300px; border: 3px solid #eee; border-radius: 10px; ">\
+                      <img src="settings-input.png" alt="セマンティックズーム" style="width: auto; height: 300px; border: 3px solid #eee; border-radius: 10px; ">\
                   </li>\
                   <li style=\"display: flex; gap: 10px; margin-bottom: 10px;\">\
-                      <img src=\"about-menu.png\" alt=\"About\" style=\"width: 30px; height: 30px;\">\
-                      <strong>About:</strong> You can learn more about the research paper and the framework that Luminate instantiates.\
+                      <img src=\"about-menu.png\" alt=\"について\" style=\"width: 30px; height: 30px;\">\
+                      <strong>Luminateについて:</strong> 研究論文とLuminateが実装するフレームワークについて詳しく知ることができます。\
                   </li>\
               </ul>\
         ',
       },
       {
-        title: 'Luminate Tutorial <img src="luminate-logo.png" style="width:30px; height:30px;"/>',
-        intro: 'This is the end of the tutorial. You can also watch a 30s video demo video to get a better understanding of Luminate.\
+        title: 'Luminateチュートリアル <img src="luminate-logo.png" style="width:30px; height:30px;"/>',
+        intro: 'これでチュートリアルは終了です。Luminateの理解を深めるために30秒のデモ動画も視聴できます。\
         <video width="540px" height="360px" controls>\
           <source src="luminate-video-preview.mp4" type="video/mp4">\
-          Your browser does not support the video tag.\
+          お使いのブラウザは動画タグをサポートしていません。\
         </video>\
-        If you want to watch the tutorial again, click <img src="tutorial-menu.png" style="width:30px; height:auto;"/>\
-        on the top right corner. Enjoy using Luminate!'
+        チュートリアルを再度見たい場合は、右上の<img src="tutorial-menu.png" style="width:30px; height:auto;"/>をクリックしてください。\
+        Luminateをお楽しみください！'
       },
     ]
   });
