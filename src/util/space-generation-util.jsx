@@ -10,7 +10,7 @@ import { generateCategoricalDimensions, validateFormatForDimensions } from "./gp
 const DELIMITER = "####";
 const MAX_TOKEN_BIG = 3500;
 const MAX_TOKEN_SMALL = 1000;
-const MODEL = "gpt-4";
+const MODEL = "gpt-4o";
 const TEMPERATURE = 0.7;
 const TOP_P = 1;
 
@@ -242,8 +242,8 @@ export async function addSimilarNodesToSpace(node, nodeMap, setNodeMap){
 async function generateResponse(message){
     // call the OpenAI API to generate a response
     try{
-        /* text-davinci-003 */
-        const response = await fetch('https://api.openai.com/v1/completions', {
+        /* gpt-4o */
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
             Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -251,7 +251,7 @@ async function generateResponse(message){
             },
             body: JSON.stringify({
             model: MODEL,
-            prompt: `${message}`,
+            messages: [{ role: 'user', content: message }],
             temperature: 0,
             max_tokens: MAX_TOKEN_BIG,
             top_p: TOP_P,
@@ -267,7 +267,7 @@ async function generateResponse(message){
         const {value, done} = await reader.read();
         total_count += 1; // increment total count
         if (value){
-            return JSON.parse(value)["choices"][0]["text"];
+            return JSON.parse(value)["choices"][0]["message"]["content"];
         } else {
             throw new Error('No value found');
         }
@@ -421,7 +421,7 @@ async function summarizeText(text){
           "Structure": "<パート 1>-<パート 2>-<パート 3>...",
           "Title": "<タイトル>"
       }`;
-    const response = await fetch('https://api.openai.com/v1/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -429,7 +429,7 @@ async function summarizeText(text){
       },
       body: JSON.stringify({
         model: MODEL,
-        prompt: `${message}`,
+        messages: [{ role: 'user', content: message }],
         temperature: 0,
         max_tokens: 256,
         top_p: TOP_P,
@@ -442,9 +442,9 @@ async function summarizeText(text){
         throw new Error('No reader found');
     }
     const {value, done} = await reader.read();
-    // console.log("text summary",JSON.parse(value)["choices"][0]["text"]);
+    // console.log("text summary",JSON.parse(value)["choices"][0]["message"]["content"]);
     if (value){
-        return JSON.parse(value)["choices"][0]["text"];
+        return JSON.parse(value)["choices"][0]["message"]["content"];
     } else {
         throw new Error('No value found');
     }
@@ -657,7 +657,7 @@ async function createLabelsFromDimension(prompt, dimensionName){
         "${dimensionName}": ["<label 1>", "<label 2>", "<label 3>"]
     }`;
 
-    const response = await fetch('https://api.openai.com/v1/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -665,7 +665,7 @@ async function createLabelsFromDimension(prompt, dimensionName){
         },
         body: JSON.stringify({
           model: MODEL,
-          prompt: `${message}`,
+          messages: [{ role: 'user', content: message }],
           temperature: TEMPERATURE,
           max_tokens: MAX_TOKEN_BIG,
           top_p: TOP_P,
@@ -680,8 +680,8 @@ async function createLabelsFromDimension(prompt, dimensionName){
     }
     const {value, done} = await reader.read();
     if (value){
-        console.log("value", JSON.parse(value)["choices"][0]["text"]);
-        return JSON.parse(value)["choices"][0]["text"];
+        console.log("value", JSON.parse(value)["choices"][0]["message"]["content"]);
+        return JSON.parse(value)["choices"][0]["message"]["content"];
     } else {
         throw new Error('No value found');
     }
