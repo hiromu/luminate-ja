@@ -243,7 +243,7 @@ async function generateResponse(message){
     // call the OpenAI API to generate a response
     try{
         /* text-davinci-003 */
-        const response = await fetch('https://api.openai.com/v1/completions', {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
             headers: {
             Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -421,7 +421,7 @@ async function summarizeText(text){
           "Structure": "<パート 1>-<パート 2>-<パート 3>...",
           "Title": "<タイトル>"
       }`;
-    const response = await fetch('https://api.openai.com/v1/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
