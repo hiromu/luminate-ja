@@ -6,7 +6,7 @@ import { getEnvVal } from "./util";
 
 const MAX_TOKEN_BIG = 1000;
 const MAX_TOKEN_SMALL = 256;
-const MODEL = "gpt-3.5-turbo-instruct";
+const MODEL = "gpt-5.2";
 const TEMPERATURE = 0.7;
 const TOP_P = 1;
 
