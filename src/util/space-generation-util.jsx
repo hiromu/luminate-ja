@@ -10,7 +10,7 @@ import { generateCategoricalDimensions, validateFormatForDimensions } from "./gp
 const DELIMITER = "####";
 const MAX_TOKEN_BIG = 3500;
 const MAX_TOKEN_SMALL = 1000;
-const MODEL = "gpt-4o";
+const MODEL = "gpt-4";
 const TEMPERATURE = 0.7;
 const TOP_P = 1;
 
@@ -243,7 +243,7 @@ async function generateResponse(message){
     // call the OpenAI API to generate a response
     try{
         /* text-davinci-003 */
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const response = await fetch('https://api.openai.com/v1/completions', {
             method: 'POST',
             headers: {
             Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -421,7 +421,7 @@ async function summarizeText(text){
           "Structure": "<パート 1>-<パート 2>-<パート 3>...",
           "Title": "<タイトル>"
       }`;
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.openai.com/v1/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
