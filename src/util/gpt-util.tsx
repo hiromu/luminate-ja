@@ -10,6 +10,24 @@ const MODEL = "gpt-4o";
 const TEMPERATURE = 0.7;
 const TOP_P = 1;
 
+/**
+ * Cleans the API response by removing markdown code blocks and extracting JSON content
+ * Handles responses like: ```json\n{...}\n``` or ```\n{...}\n```
+ */
+function cleanApiResponse(content: string): string {
+  // Remove markdown code blocks
+  let cleaned = content.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+  // Remove trailing whitespace and newlines
+  cleaned = cleaned.trim();
+  // Extract JSON content between first { and last }
+  const firstBrace = cleaned.indexOf('{');
+  const lastBrace = cleaned.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace !== -1) {
+    cleaned = cleaned.substring(firstBrace, lastBrace + 1);
+  }
+  return cleaned;
+}
+
 export async function generateDimensions(query, context){
   // generate dimensions based on the query and context
   const start = new Date().getTime();
@@ -125,8 +143,10 @@ export async function generateCategoricalDimensions(prompt, catNum, valNum, temp
       }
       const reader : any = response.body?.pipeThrough(new TextDecoderStream()).getReader();
       const {value, done} = await reader.read();
-      console.log("categorical dimensions", JSON.parse(value)["choices"][0]["message"]["content"]);
-      return JSON.parse(value)["choices"][0]["message"]["content"];
+      const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+      const cleanedContent = cleanApiResponse(rawContent);
+      console.log("categorical dimensions", cleanedContent);
+      return cleanedContent;
 
     } catch (e) {
       let toast = new bootstrap.Toast(document.getElementById('error-toast'));
@@ -167,8 +187,10 @@ export async function generateOrdinalDimensions(prompt, catNum){
     }
     const reader : any = response.body?.pipeThrough(new TextDecoderStream()).getReader();
     const {value, done} = await reader.read();
-    console.log("ordinal dimensions", JSON.parse(value)["choices"][0]["message"]["content"]);
-    return JSON.parse(value)["choices"][0]["message"]["content"];
+    const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+    const cleanedContent = cleanApiResponse(rawContent);
+    console.log("ordinal dimensions", cleanedContent);
+    return cleanedContent;
   } catch (e) {
     console.log(e);
     return null;
@@ -204,8 +226,10 @@ export async function generateNumericalDimensions(prompt, numNum){
     });
     const reader:any = response.body?.pipeThrough(new TextDecoderStream()).getReader();
     const {value, done} = await reader.read();
-    console.log("numerical dimensions", JSON.parse(value)["choices"][0]["message"]["content"]);
-    return JSON.parse(value)["choices"][0]["message"]["content"];
+    const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+    const cleanedContent = cleanApiResponse(rawContent);
+    console.log("numerical dimensions", cleanedContent);
+    return cleanedContent;
 }
 
 
@@ -259,7 +283,8 @@ export async function getRelatedTextBasedOnDimension(dimension, val, text){
     });
     const reader : any= response.body?.pipeThrough(new TextDecoderStream()).getReader();
     const {value, done} = await reader.read();
-    return JSON.parse(value)["choices"][0]["message"]["content"];
+    const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+    return cleanApiResponse(rawContent);
 }
 
 
@@ -345,7 +370,8 @@ export async function getKeyTextBasedOnDimension(kvPairs, text){
   });
   const reader : any  = response.body?.pipeThrough(new TextDecoderStream()).getReader();
   const {value, done} = await reader.read();
-  let result  = JSON.parse(value)["choices"][0]["message"]["content"]
+  const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+  let result = cleanApiResponse(rawContent);
   // only grep the {} part
   result = result.substring(result.indexOf("{"), result.lastIndexOf("}") + 1);
   return result;

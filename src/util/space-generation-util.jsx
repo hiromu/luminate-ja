@@ -14,6 +14,24 @@ const MODEL = "gpt-4o";
 const TEMPERATURE = 0.7;
 const TOP_P = 1;
 
+/**
+ * Cleans the API response by removing markdown code blocks and extracting JSON content
+ * Handles responses like: ```json\n{...}\n``` or ```\n{...}\n```
+ */
+function cleanApiResponse(content) {
+  // Remove markdown code blocks
+  let cleaned = content.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+  // Remove trailing whitespace and newlines
+  cleaned = cleaned.trim();
+  // Extract JSON content between first { and last }
+  const firstBrace = cleaned.indexOf('{');
+  const lastBrace = cleaned.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace !== -1) {
+    cleaned = cleaned.substring(firstBrace, lastBrace + 1);
+  }
+  return cleaned;
+}
+
 let fail_count = 0;
 let total_count = 0;
 let firstId = '';
@@ -267,7 +285,8 @@ async function generateResponse(message){
         const {value, done} = await reader.read();
         total_count += 1; // increment total count
         if (value){
-            return JSON.parse(value)["choices"][0]["message"]["content"];
+            const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+            return cleanApiResponse(rawContent);
         } else {
             throw new Error('No value found');
         }
@@ -444,7 +463,8 @@ async function summarizeText(text){
     const {value, done} = await reader.read();
     // console.log("text summary",JSON.parse(value)["choices"][0]["message"]["content"]);
     if (value){
-        return JSON.parse(value)["choices"][0]["message"]["content"];
+        const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+        return cleanApiResponse(rawContent);
     } else {
         throw new Error('No value found');
     }
@@ -680,8 +700,10 @@ async function createLabelsFromDimension(prompt, dimensionName){
     }
     const {value, done} = await reader.read();
     if (value){
-        console.log("value", JSON.parse(value)["choices"][0]["message"]["content"]);
-        return JSON.parse(value)["choices"][0]["message"]["content"];
+        const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+        const cleanedContent = cleanApiResponse(rawContent);
+        console.log("value", cleanedContent);
+        return cleanedContent;
     } else {
         throw new Error('No value found');
     }
