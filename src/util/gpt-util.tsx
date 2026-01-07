@@ -6,7 +6,7 @@ import { getEnvVal } from "./util";
 
 const MAX_TOKEN_BIG = 1000;
 const MAX_TOKEN_SMALL = 256;
-const MODEL = "gpt-4.1";
+const MODEL = "gpt-4o";
 const TEMPERATURE = 0.7;
 const TOP_P = 1;
 
@@ -103,7 +103,7 @@ export async function generateCategoricalDimensions(prompt, catNum, valNum, temp
     `
 
     try {
-      const response = await fetch('https://api.openai.com/v1/completions', {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -145,7 +145,7 @@ export async function generateOrdinalDimensions(prompt, catNum){
       "<次元名>": ["<最低度>", "低い", "中程度", "高い", "<最高度>"]
   }`
   try {
-    const response = await fetch('https://api.openai.com/v1/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
