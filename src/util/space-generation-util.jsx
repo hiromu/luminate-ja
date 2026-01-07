@@ -4,7 +4,7 @@ import useEditorStore from "../store/use-editor-store";
 import DatabaseManager from "../db/database-manager";
 import useSelectedStore from "../store/use-selected-store";
 import * as bootstrap from 'bootstrap';
-import { uuid, getEnvVal } from "./util";
+import { uuid, getEnvVal, cleanApiResponse } from "./util";
 import { generateCategoricalDimensions, validateFormatForDimensions } from "./gpt-util";
 
 const DELIMITER = "####";
@@ -13,24 +13,6 @@ const MAX_TOKEN_SMALL = 1000;
 const MODEL = "gpt-4o";
 const TEMPERATURE = 0.7;
 const TOP_P = 1;
-
-/**
- * Cleans the API response by removing markdown code blocks and extracting JSON content
- * Handles responses like: ```json\n{...}\n``` or ```\n{...}\n```
- */
-function cleanApiResponse(content) {
-  // Remove markdown code blocks
-  let cleaned = content.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-  // Remove trailing whitespace and newlines
-  cleaned = cleaned.trim();
-  // Extract JSON content between first { and last }
-  const firstBrace = cleaned.indexOf('{');
-  const lastBrace = cleaned.lastIndexOf('}');
-  if (firstBrace !== -1 && lastBrace !== -1) {
-    cleaned = cleaned.substring(firstBrace, lastBrace + 1);
-  }
-  return cleaned;
-}
 
 let fail_count = 0;
 let total_count = 0;

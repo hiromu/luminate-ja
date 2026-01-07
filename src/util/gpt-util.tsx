@@ -2,31 +2,13 @@ import useEditorStore from "../store/use-editor-store";
 import DatabaseManager from "../db/database-manager";
 import { nominalDimensionDef, ordinalDimensionDef } from "./prompts";
 import * as bootstrap from 'bootstrap';
-import { getEnvVal } from "./util";
+import { getEnvVal, cleanApiResponse } from "./util";
 
 const MAX_TOKEN_BIG = 1000;
 const MAX_TOKEN_SMALL = 256;
 const MODEL = "gpt-4o";
 const TEMPERATURE = 0.7;
 const TOP_P = 1;
-
-/**
- * Cleans the API response by removing markdown code blocks and extracting JSON content
- * Handles responses like: ```json\n{...}\n``` or ```\n{...}\n```
- */
-function cleanApiResponse(content: string): string {
-  // Remove markdown code blocks
-  let cleaned = content.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-  // Remove trailing whitespace and newlines
-  cleaned = cleaned.trim();
-  // Extract JSON content between first { and last }
-  const firstBrace = cleaned.indexOf('{');
-  const lastBrace = cleaned.lastIndexOf('}');
-  if (firstBrace !== -1 && lastBrace !== -1) {
-    cleaned = cleaned.substring(firstBrace, lastBrace + 1);
-  }
-  return cleaned;
-}
 
 export async function generateDimensions(query, context){
   // generate dimensions based on the query and context
@@ -372,8 +354,6 @@ export async function getKeyTextBasedOnDimension(kvPairs, text){
   const {value, done} = await reader.read();
   const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
   let result = cleanApiResponse(rawContent);
-  // only grep the {} part
-  result = result.substring(result.indexOf("{"), result.lastIndexOf("}") + 1);
   return result;
 }
 

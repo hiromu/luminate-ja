@@ -11,6 +11,24 @@ export const getEnvVal = (key: string): string => {
   return import.meta.env[key];
 }
 
+/**
+ * Cleans the API response by removing markdown code blocks and extracting JSON content
+ * Handles responses like: ```json\n{...}\n``` or ```\n{...}\n```
+ */
+export const cleanApiResponse = (content: string): string => {
+  // Remove markdown code blocks
+  let cleaned = content.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+  // Remove trailing whitespace and newlines
+  cleaned = cleaned.trim();
+  // Extract JSON content between first { and last }
+  const firstBrace = cleaned.indexOf('{');
+  const lastBrace = cleaned.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace !== -1) {
+    cleaned = cleaned.substring(firstBrace, lastBrace + 1);
+  }
+  return cleaned;
+}
+
 export const colors : string[] = [
   '#FF6E67',
   '#6AB2FF',
