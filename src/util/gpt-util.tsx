@@ -2,11 +2,11 @@ import useEditorStore from "../store/use-editor-store";
 import DatabaseManager from "../db/database-manager";
 import { nominalDimensionDef, ordinalDimensionDef } from "./prompts";
 import * as bootstrap from 'bootstrap';
-import { getEnvVal } from "./util";
+import { getEnvVal, cleanApiResponse } from "./util";
 
 const MAX_TOKEN_BIG = 1000;
 const MAX_TOKEN_SMALL = 256;
-const MODEL = "gpt-4";
+const MODEL = "gpt-4o";
 const TEMPERATURE = 0.7;
 const TOP_P = 1;
 
@@ -103,7 +103,7 @@ export async function generateCategoricalDimensions(prompt, catNum, valNum, temp
     `
 
     try {
-      const response = await fetch('https://api.openai.com/v1/completions', {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -111,7 +111,7 @@ export async function generateCategoricalDimensions(prompt, catNum, valNum, temp
           },
           body: JSON.stringify({
             model: MODEL,
-            prompt: `${message}`,
+            messages: [{ role: 'user', content: message }],
             temperature: temperature,
             max_tokens: MAX_TOKEN_BIG,
             top_p: TOP_P,
@@ -125,8 +125,10 @@ export async function generateCategoricalDimensions(prompt, catNum, valNum, temp
       }
       const reader : any = response.body?.pipeThrough(new TextDecoderStream()).getReader();
       const {value, done} = await reader.read();
-      console.log("categorical dimensions", JSON.parse(value)["choices"][0]["text"]);
-      return JSON.parse(value)["choices"][0]["text"];
+      const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+      const cleanedContent = cleanApiResponse(rawContent);
+      console.log("categorical dimensions", cleanedContent);
+      return cleanedContent;
 
     } catch (e) {
       let toast = new bootstrap.Toast(document.getElementById('error-toast'));
@@ -145,7 +147,7 @@ export async function generateOrdinalDimensions(prompt, catNum){
       "<次元名>": ["<最低度>", "低い", "中程度", "高い", "<最高度>"]
   }`
   try {
-    const response = await fetch('https://api.openai.com/v1/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -153,7 +155,7 @@ export async function generateOrdinalDimensions(prompt, catNum){
         },
         body: JSON.stringify({
           model: MODEL,
-          prompt: `${message}`,
+          messages: [{ role: 'user', content: message }],
           temperature: TEMPERATURE,
           max_tokens: MAX_TOKEN_BIG,
           top_p: TOP_P,
@@ -167,8 +169,10 @@ export async function generateOrdinalDimensions(prompt, catNum){
     }
     const reader : any = response.body?.pipeThrough(new TextDecoderStream()).getReader();
     const {value, done} = await reader.read();
-    console.log("ordinal dimensions", JSON.parse(value)["choices"][0]["text"]);
-    return JSON.parse(value)["choices"][0]["text"];
+    const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+    const cleanedContent = cleanApiResponse(rawContent);
+    console.log("ordinal dimensions", cleanedContent);
+    return cleanedContent;
   } catch (e) {
     console.log(e);
     return null;
@@ -186,7 +190,7 @@ export async function generateNumericalDimensions(prompt, numNum){
     {
         "<dimension name>": [<lowest value>, <highest value>]
     }`;
-    const response = await fetch('https://api.openai.com/v1/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -194,7 +198,7 @@ export async function generateNumericalDimensions(prompt, numNum){
       },
       body: JSON.stringify({
         model: MODEL,
-        prompt: `${message}`,
+        messages: [{ role: 'user', content: message }],
         temperature: 0.7,
         max_tokens: MAX_TOKEN_SMALL,
         top_p: TOP_P,
@@ -204,8 +208,10 @@ export async function generateNumericalDimensions(prompt, numNum){
     });
     const reader:any = response.body?.pipeThrough(new TextDecoderStream()).getReader();
     const {value, done} = await reader.read();
-    console.log("numerical dimensions", JSON.parse(value)["choices"][0]["text"]);
-    return JSON.parse(value)["choices"][0]["text"];
+    const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+    const cleanedContent = cleanApiResponse(rawContent);
+    console.log("numerical dimensions", cleanedContent);
+    return cleanedContent;
 }
 
 
@@ -241,7 +247,7 @@ export async function getRelatedTextBasedOnDimension(dimension, val, text){
         "2": "<original text 2>", 
         "3": "<original text 3>"
     }`;
-    const response = await fetch('https://api.openai.com/v1/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -249,7 +255,7 @@ export async function getRelatedTextBasedOnDimension(dimension, val, text){
       },
       body: JSON.stringify({
         model: MODEL,
-        prompt: `${message}`,
+        messages: [{ role: 'user', content: message }],
         temperature: 0,
         max_tokens: 256,
         top_p: TOP_P,
@@ -259,7 +265,8 @@ export async function getRelatedTextBasedOnDimension(dimension, val, text){
     });
     const reader : any= response.body?.pipeThrough(new TextDecoderStream()).getReader();
     const {value, done} = await reader.read();
-    return JSON.parse(value)["choices"][0]["text"];
+    const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+    return cleanApiResponse(rawContent);
 }
 
 
@@ -327,7 +334,7 @@ export async function getKeyTextBasedOnDimension(kvPairs, text){
       "2": "<original text 2>", 
       "3": "<original text 3>"
   }`;
-  const response = await fetch('https://api.openai.com/v1/completions', {
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getEnvVal('VITE_OPENAI_API_KEY')}`,
@@ -335,7 +342,7 @@ export async function getKeyTextBasedOnDimension(kvPairs, text){
     },
     body: JSON.stringify({
       model: MODEL,
-      prompt: `${message}`,
+      messages: [{ role: 'user', content: message }],
       temperature: 0,
       max_tokens: 256,
       top_p: 1,
@@ -345,9 +352,8 @@ export async function getKeyTextBasedOnDimension(kvPairs, text){
   });
   const reader : any  = response.body?.pipeThrough(new TextDecoderStream()).getReader();
   const {value, done} = await reader.read();
-  let result  = JSON.parse(value)["choices"][0]["text"]
-  // only grep the {} part
-  result = result.substring(result.indexOf("{"), result.lastIndexOf("}") + 1);
+  const rawContent = JSON.parse(value)["choices"][0]["message"]["content"];
+  let result = cleanApiResponse(rawContent);
   return result;
 }
 
