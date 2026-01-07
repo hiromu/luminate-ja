@@ -21,8 +21,8 @@ export const cleanApiResponse = (content: string): string => {
     return '';
   }
   
-  // Remove markdown code blocks
-  let cleaned = content.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+  // Remove markdown code blocks - handle both ```json and ``` patterns
+  let cleaned = content.replace(/```(json)?\s*/g, '');
   // Remove trailing whitespace and newlines
   cleaned = cleaned.trim();
   // Extract JSON content between first { and last }
