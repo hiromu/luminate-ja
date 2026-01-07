@@ -16,6 +16,11 @@ export const getEnvVal = (key: string): string => {
  * Handles responses like: ```json\n{...}\n``` or ```\n{...}\n```
  */
 export const cleanApiResponse = (content: string): string => {
+  // Handle edge cases: null, undefined, or empty
+  if (!content || content.trim() === '') {
+    return '';
+  }
+  
   // Remove markdown code blocks
   let cleaned = content.replace(/```json\s*/g, '').replace(/```\s*/g, '');
   // Remove trailing whitespace and newlines
@@ -23,7 +28,7 @@ export const cleanApiResponse = (content: string): string => {
   // Extract JSON content between first { and last }
   const firstBrace = cleaned.indexOf('{');
   const lastBrace = cleaned.lastIndexOf('}');
-  if (firstBrace !== -1 && lastBrace !== -1) {
+  if (firstBrace !== -1 && lastBrace !== -1 && firstBrace < lastBrace) {
     cleaned = cleaned.substring(firstBrace, lastBrace + 1);
   }
   return cleaned;
