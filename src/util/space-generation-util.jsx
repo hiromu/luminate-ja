@@ -10,7 +10,7 @@ import { generateCategoricalDimensions, validateFormatForDimensions } from "./gp
 const DELIMITER = "####";
 const MAX_TOKEN_BIG = 3500;
 const MAX_TOKEN_SMALL = 1000;
-const MODEL = "gpt-3.5-turbo-instruct";
+const MODEL = "gpt-4o";
 const TEMPERATURE = 0.7;
 const TOP_P = 1;
 
